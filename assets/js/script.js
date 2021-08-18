@@ -8,6 +8,7 @@ var newButtonTable = []
 var counterVar = 0
 var rightAnswers = 0
 var sec = 75;
+var gameStarted = false;
 
 timerText.textContent = sec + " sec"
 //These Arrays will store the string values for the button text
@@ -30,17 +31,25 @@ var fifthKey = [false, false, true, false]
 
 
 function resetPage(){
-
+    gameStarted = false;
+    newButtonTable = []
+    counterVar = 0
+    var element = document.getElementById('AnswerButton');
+    element.parentNode.removeChild(element);
+    StartButton.style.visibility = "visible";
+    sec = 75;
 }
 
 function timer(){
     var timer = setInterval(function(){
-        timerText.innerHTML= sec + " sec";
-        sec--;
-        if (sec < 0) {
-            clearInterval(timer);
-            resetPage();
-        }
+        if (gameStarted){
+            timerText.innerHTML= sec + " sec";
+            sec--;
+            if (sec < 0) {
+                clearInterval(timer);
+                resetPage();
+            }
+        }   
     }, 1000);
 }
 
@@ -63,7 +72,7 @@ function changeText(){
         }
         else{
             console.log("Quiz finished, you got " + rightAnswers + "/5 questions correct!")
-
+            resetPage()
             //Create resetbutton and save time button
         }
     }
@@ -143,6 +152,7 @@ function MakeButtons(){
 }
 
 function startGame(){
+    gameStarted = true
     timer()
     StartButton.style.visibility= "hidden"; 
     MakeButtons();
