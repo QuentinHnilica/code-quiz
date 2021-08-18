@@ -2,12 +2,14 @@
 var StartButton = document.getElementById("StartButton");
 var h2 = document.getElementById("h2");
 var answers = document.getElementById("answers");
-var controller = new AbortController();
-
+var timerText = document.getElementById("timer");
 var newButtonTable = []
 
 var counterVar = 0
+var rightAnswers = 0
+var sec = 75;
 
+timerText.textContent = sec + " sec"
 //These Arrays will store the string values for the button text
 var firstAnswers = ["true", "false", "false", "false"]
 var secondAnswers = ["false", "false", "true", "false"]
@@ -21,11 +23,26 @@ var secondKey = [false, false, true, false]
 var thirdKey = [false, false, false, true]
 var forthKey = [false, true, false, false]
 var fifthKey = [false, false, true, false]
-//TimerVars
 
 //resetVars
 
 //saving initials Vars
+
+
+function resetPage(){
+
+}
+
+function timer(){
+    var timer = setInterval(function(){
+        timerText.innerHTML= sec + " sec";
+        sec--;
+        if (sec < 0) {
+            clearInterval(timer);
+            resetPage();
+        }
+    }, 1000);
+}
 
 function changeText(){
     for (var i = 0; i < 4; i++){
@@ -44,6 +61,11 @@ function changeText(){
         else if (counterVar == 5){
             newButtonTable[i].innerText = fifthAnswers[i]
         }
+        else{
+            console.log("Quiz finished, you got " + rightAnswers + "/5 questions correct!")
+
+            //Create resetbutton and save time button
+        }
     }
 }
 
@@ -53,41 +75,51 @@ function answerSelected(event){
     if (counterVar == 1){
         if (firstKey[pressedButton]){
             console.log("you're right!")
+            rightAnswers++
         }
         else{
             console.log("you're Wrong")
+            sec -= 5
         }
     }
     else if (counterVar == 2){
         if (secondKey[pressedButton]){
             console.log("you're right!")
+            rightAnswers++
         }
         else{
             console.log("you're Wrong")
+            sec -= 5
         }
     }
     else if (counterVar == 3){
         if (thirdKey[pressedButton]){
             console.log("you're right!")
+            rightAnswers++
         }
         else{
             console.log("you're Wrong")
+            sec -= 5
         }
     }
     else if (counterVar == 4){
         if (forthKey[pressedButton]){
             console.log("you're right!")
+            rightAnswers++
         }
         else{
             console.log("you're Wrong")
+            sec -= 5
         }
     }
     else if (counterVar == 5){
         if (fifthKey[pressedButton]){
             console.log("you're right!")
+            rightAnswers++
         }
         else{
             console.log("you're Wrong")
+            sec -= 5
         }
     }
 
@@ -111,10 +143,12 @@ function MakeButtons(){
 }
 
 function startGame(){
+    timer()
     StartButton.style.visibility= "hidden"; 
     MakeButtons();
     counterVar++
     changeText()
+    
     //Set up first question and Button answers
     //firstQuestions();
 
