@@ -65,6 +65,10 @@ function sortLeader(){
        newScore.className = "list-group-item"
        
        newScore.innerText = `${e.player} ${e.score}`
+       newScore.style.margin = "4%"
+       newScore.style.backgroundColor = "purple"
+       newScore.style.color = "white"
+       newScore.style.width = "220px"
        scoreEL.push(newScore)
        leaderUl.appendChild(newScore)
 
@@ -84,9 +88,10 @@ function sortLeader(){
 }
 
 function saveLeader(){
-    var realInitials = document.querySelector('#initials')
+    var textValue = document.querySelector('#initials')
+    var realInitials = textValue.value.replace(/[0-9]/g, '');
     var leader = {}
-    leader.player = realInitials.value
+    leader.player = realInitials
     leader.score = sec
     scores.push(leader)
     sortLeader()
@@ -102,19 +107,7 @@ function endGame(){
     }
     newButtonTable = []
     counterVar = 0
-    // var initials = document.createElement('input')
-    // initials.id="initials"
-    // initials.type = "text"
-    // initials.className = "form-control"
-    // answers.appendChild(initials);
-    // var saveData = document.createElement('button')
-    // saveData.id = "save"
-    // saveData.className = "btn btn-primary btn-lg"
-    // answers.appendChild(saveData)
 
-    
-    // saveData.innerText = "SaveScore";
-    
     var saveData = document.getElementById("save")
 
     saveData.addEventListener('click', saveLeader);
@@ -244,6 +237,7 @@ function MakeButtons(){
         newButton.innerText = "Bruh";
         newButton.id="AnswerButton"
         newButton.className = "btn btn-primary btn-lg"
+        newButton.style.margin = "4%"
         answers.appendChild(newButton);
         newButton.addEventListener('click', answerSelected)
         newButtonTable[i] = newButton //Use this to reference each button
