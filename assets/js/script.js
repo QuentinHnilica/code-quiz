@@ -5,6 +5,8 @@ var answers = document.getElementById("answers");
 var timerText = document.getElementById("timer");
 var wrongAnswer = document.getElementById("wrong")
 var leaderUl = document.getElementById("leaderstats")
+
+var inputDiv = document.getElementById("inputDiv")
 var newButtonTable = []
 
 var counterVar = 0
@@ -34,6 +36,7 @@ var localData = window.localStorage
 var scores = []
 var scoreEL = []
 
+inputDiv.style.display = "none"
 wrongAnswer.style.visibility = "hidden";
 
 function resetPage(){
@@ -58,6 +61,7 @@ function sortLeader(){
     scores.sort((a, b) => b.score - a.score)
     scores.forEach((e) => {
        var newScore = document.createElement('li')
+       newScore.className = "list-group-item"
        
        newScore.innerText = `${e.player} ${e.score}`
        scoreEL.push(newScore)
@@ -71,8 +75,7 @@ function sortLeader(){
     }
     var playAgain = document.createElement('button')
     playAgain.id = "playAgain"
-    playAgain.style.width = "50px";
-    playAgain.style.height = "20px";
+    playAgain.className = "btn btn-primary btn-lg"
     playAgain.innerText = "Go Back";
     answers.appendChild(playAgain)
     playAgain.addEventListener('click', resetPage)
@@ -80,44 +83,38 @@ function sortLeader(){
 }
 
 function saveLeader(){
-    var saveButton = document.getElementById("save")
-    saveButton.parentNode.removeChild(saveButton)
-
-    
-
     var realInitials = document.querySelector('#initials')
     var leader = {}
     leader.player = realInitials.value
     leader.score = sec
     scores.push(leader)
     sortLeader()
-
+    inputDiv.style.display = "none"
     //localData.setItem("leaderstats", leaderStats)
-    
-    var initialId = document.getElementById("initials")
-    initialId.parentNode.removeChild(initialId)
 }
 
 function endGame(){
+    inputDiv.style.display = "block"
     gameStarted = false;
     for (var i = 0; i < 4; i++){
         newButtonTable[i].parentNode.removeChild(newButtonTable[i]);
     }
     newButtonTable = []
     counterVar = 0
-    var initials = document.createElement('input')
-    initials.id="initials"
-    initials.type = "text"
-    initials.style.width = "50px";
-    initials.style.height = "20px";
-    answers.appendChild(initials);
-    var saveData = document.createElement('button')
-    saveData.id = "save"
-    answers.appendChild(saveData)
+    // var initials = document.createElement('input')
+    // initials.id="initials"
+    // initials.type = "text"
+    // initials.className = "form-control"
+    // answers.appendChild(initials);
+    // var saveData = document.createElement('button')
+    // saveData.id = "save"
+    // saveData.className = "btn btn-primary btn-lg"
+    // answers.appendChild(saveData)
 
-    saveData.style.width = "50px";
-    saveData.style.height = "20px";
-    saveData.innerText = "SaveScore";
+    
+    // saveData.innerText = "SaveScore";
+    
+    var saveData = document.getElementById("save")
 
     saveData.addEventListener('click', saveLeader);
     
@@ -238,11 +235,9 @@ function MakeButtons(){
     for (var i = 0; i < 4; i++){
         //Creates 4 Buttons and adds them to an array for quick easy reference
         var newButton = document.createElement('button');
-        newButton.style.width = "50px";
-        newButton.style.height = "20px";
         newButton.innerText = "Bruh";
         newButton.id="AnswerButton"
-        newButton.className = "answerButtons"
+        newButton.className = "btn btn-primary btn-lg"
         answers.appendChild(newButton);
         newButton.addEventListener('click', answerSelected)
         newButtonTable[i] = newButton //Use this to reference each button
