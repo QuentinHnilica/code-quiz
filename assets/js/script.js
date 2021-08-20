@@ -3,6 +3,8 @@ var StartButton = document.getElementById("StartButton");
 var h2 = document.getElementById("h2");
 var answers = document.getElementById("answers");
 var timerText = document.getElementById("timer");
+var wrongAnswer = document.getElementById("wrong")
+var leaderUl = document.getElementById("leaderstats")
 var newButtonTable = []
 
 var counterVar = 0
@@ -28,16 +30,97 @@ var fifthKey = [false, false, true, false]
 //resetVars
 
 //saving initials Vars
+var localData = window.localStorage
+var scores = []
+var scoreEL = []
 
+wrongAnswer.style.visibility = "hidden";
 
 function resetPage(){
-    gameStarted = false;
-    newButtonTable = []
-    counterVar = 0
-    var element = document.getElementById('AnswerButton');
-    element.parentNode.removeChild(element);
+    
+    
+    var playAgain = document.getElementById("playAgain")
+    
+    
+    playAgain.parentNode.removeChild(playAgain)
     StartButton.style.visibility = "visible";
     sec = 75;
+    for (var i =0; i < scoreEL.length; i++){
+        scoreEL[i].parentNode.removeChild(scoreEL[i])
+        
+    }
+    scoreEL = []
+}
+
+function sortLeader(){
+    document.getElementById("StartButton").style.visibility = "hidden"
+
+    scores.sort((a, b) => b.score - a.score)
+    scores.forEach((e) => {
+       var newScore = document.createElement('li')
+       
+       newScore.innerText = `${e.player} ${e.score}`
+       scoreEL.push(newScore)
+       leaderUl.appendChild(newScore)
+
+       
+    });
+
+    for (var i = 0; i < scores.length; i++){
+        localData.setItem("leader" +i, scores[i].player + "" + scores[i].score)
+    }
+    var playAgain = document.createElement('button')
+    playAgain.id = "playAgain"
+    playAgain.style.width = "50px";
+    playAgain.style.height = "20px";
+    playAgain.innerText = "Go Back";
+    answers.appendChild(playAgain)
+    playAgain.addEventListener('click', resetPage)
+    //displayLeaderBoards()
+}
+
+function saveLeader(){
+    var saveButton = document.getElementById("save")
+    saveButton.parentNode.removeChild(saveButton)
+
+    
+
+    var realInitials = document.querySelector('#initials')
+    var leader = {}
+    leader.player = realInitials.value
+    leader.score = sec
+    scores.push(leader)
+    sortLeader()
+
+    //localData.setItem("leaderstats", leaderStats)
+    
+    var initialId = document.getElementById("initials")
+    initialId.parentNode.removeChild(initialId)
+}
+
+function endGame(){
+    gameStarted = false;
+    for (var i = 0; i < 4; i++){
+        newButtonTable[i].parentNode.removeChild(newButtonTable[i]);
+    }
+    newButtonTable = []
+    counterVar = 0
+    var initials = document.createElement('input')
+    initials.id="initials"
+    initials.type = "text"
+    initials.style.width = "50px";
+    initials.style.height = "20px";
+    answers.appendChild(initials);
+    var saveData = document.createElement('button')
+    saveData.id = "save"
+    answers.appendChild(saveData)
+
+    saveData.style.width = "50px";
+    saveData.style.height = "20px";
+    saveData.innerText = "SaveScore";
+
+    saveData.addEventListener('click', saveLeader);
+    
 }
 
 function timer(){
@@ -49,7 +132,12 @@ function timer(){
                 clearInterval(timer);
                 resetPage();
             }
+            wrongAnswer.style.visibility = "hidden";
         }   
+        else{
+            clearInterval(timer);
+            return
+        }
     }, 1000);
 }
 
@@ -71,8 +159,12 @@ function changeText(){
             newButtonTable[i].innerText = fifthAnswers[i]
         }
         else{
-            console.log("Quiz finished, you got " + rightAnswers + "/5 questions correct!")
-            resetPage()
+            if (i==3){
+                console.log("Quiz finished, you got " + rightAnswers + "/5 questions correct!")
+                endGame();
+            }
+            
+            
             //Create resetbutton and save time button
         }
     }
@@ -88,6 +180,7 @@ function answerSelected(event){
         }
         else{
             console.log("you're Wrong")
+            wrongAnswer.style.visibility = "visible";
             sec -= 5
         }
     }
@@ -98,6 +191,7 @@ function answerSelected(event){
         }
         else{
             console.log("you're Wrong")
+            wrongAnswer.style.visibility = "visible";
             sec -= 5
         }
     }
@@ -108,6 +202,7 @@ function answerSelected(event){
         }
         else{
             console.log("you're Wrong")
+            wrongAnswer.style.visibility = "visible";
             sec -= 5
         }
     }
@@ -118,6 +213,7 @@ function answerSelected(event){
         }
         else{
             console.log("you're Wrong")
+            wrongAnswer.style.visibility = "visible";
             sec -= 5
         }
     }
@@ -128,6 +224,7 @@ function answerSelected(event){
         }
         else{
             console.log("you're Wrong")
+            wrongAnswer.style.visibility = "visible";
             sec -= 5
         }
     }
@@ -145,6 +242,7 @@ function MakeButtons(){
         newButton.style.height = "20px";
         newButton.innerText = "Bruh";
         newButton.id="AnswerButton"
+        newButton.className = "answerButtons"
         answers.appendChild(newButton);
         newButton.addEventListener('click', answerSelected)
         newButtonTable[i] = newButton //Use this to reference each button
@@ -166,6 +264,23 @@ function startGame(){
 
 
 }
+
+function checkStorage(){
+    for (var i = 0; i < localData.length; i++){
+        
+        if (localData.getItem("leader" + i)  != null){
+            var oldObjects = {}
+            var oldInitials = localData.getItem("leader" + i).replace(/[0-9]/g, '');
+            var oldScore = parseInt(localData.getItem("leader" + i).match(/\d+/g));
+            oldObjects.player = oldInitials
+            oldObjects.score = oldScore
+
+            scores.push(oldObjects)
+        }
+    }
+}
+
+checkStorage()
 
 
 StartButton.addEventListener('click', startGame); //StartsGame
