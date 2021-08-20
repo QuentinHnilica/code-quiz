@@ -53,11 +53,12 @@ function resetPage(){
         
     }
     scoreEL = []
+    h2.innerText = "Press button to start the game"
 }
 
 function sortLeader(){
     document.getElementById("StartButton").style.visibility = "hidden"
-
+    h2.innerText = "Leader Board!"
     scores.sort((a, b) => b.score - a.score)
     scores.forEach((e) => {
        var newScore = document.createElement('li')
@@ -142,22 +143,27 @@ function changeText(){
     for (var i = 0; i < 4; i++){
         if (counterVar == 1){
             newButtonTable[i].innerText = firstAnswers[i]
+            h2.innerText = "Question 1"
         }
         else if (counterVar == 2){
             newButtonTable[i].innerText = secondAnswers[i]
+            h2.innerText = "Question 2"
         }
         else if (counterVar == 3){
             newButtonTable[i].innerText = thirdAnswers[i]
+            h2.innerText = "Question 3"
         }
         else if (counterVar == 4){
             newButtonTable[i].innerText = forthAnswers[i]
+            h2.innerText = "Question 4"
         }
         else if (counterVar == 5){
             newButtonTable[i].innerText = fifthAnswers[i]
+            h2.innerText = "Question 5"
         }
         else{
             if (i==3){
-                console.log("Quiz finished, you got " + rightAnswers + "/5 questions correct!")
+                h2.innerText = "Quiz finished, you got " + rightAnswers + "/5 questions correct!"
                 endGame();
             }
             
