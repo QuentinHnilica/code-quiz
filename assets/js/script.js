@@ -11,16 +11,17 @@ var newButtonTable = []
 
 var counterVar = 0
 var rightAnswers = 0
-var sec = 75;
+var sec = 60;
 var gameStarted = false;
 
 timerText.textContent = sec + " sec"
+
 //These Arrays will store the string values for the button text
-var firstAnswers = ["true", "false", "false", "false"]
-var secondAnswers = ["false", "false", "true", "false"]
-var thirdAnswers = ["false", "false", "false", "true"]
-var forthAnswers = ["false", "true", "false", "false"]
-var fifthAnswers = ["false", "false", "true", "false"]
+var firstAnswers = ["console.log(" + '\u0022' + "HelloWorld" + '\u0022' + ")", "print(" + '\u0022' + "HelloWorld" + '\u0022' + ")", "Debug.Log(" + '\u0022' + "HelloWorld" + '\u0022' + ")", "echo(" + '\u0022' + "HelloWorld" + '\u0022' + ")"]
+var secondAnswers = ["myString", "Bool", "String", "Txt"]
+var thirdAnswers = ["--", "-/", "/*", "//"]
+var forthAnswers = ["public float x = 2.6", "var x = 2.6", "float x = 2.6", "None of the above"]
+var fifthAnswers = ["function{}", "functionName", "functionName()", "functionName.Run()"]
 
 //AnswerKey
 var firstKey = [true, false, false, false]
@@ -47,7 +48,9 @@ function resetPage(){
     
     playAgain.parentNode.removeChild(playAgain)
     StartButton.style.visibility = "visible";
-    sec = 75;
+    sec = 60;
+    timerText.textContent = sec + " sec"
+    rightAnswers = 0
     for (var i =0; i < scoreEL.length; i++){
         scoreEL[i].parentNode.removeChild(scoreEL[i])
         
@@ -100,7 +103,10 @@ function saveLeader(){
 }
 
 function endGame(){
+    var rightOrWrong = document.getElementById("rightOrWrong")
     inputDiv.style.display = "block"
+    rightOrWrong.style.display = "none"
+    wrongAnswer.style.visibility = "hidden";
     gameStarted = false;
     for (var i = 0; i < 4; i++){
         newButtonTable[i].parentNode.removeChild(newButtonTable[i]);
@@ -115,6 +121,7 @@ function endGame(){
 }
 
 function timer(){
+    var rightOrWrong = document.getElementById("rightOrWrong")
     var timer = setInterval(function(){
         if (gameStarted){
             timerText.innerHTML= sec + " sec";
@@ -123,9 +130,12 @@ function timer(){
                 clearInterval(timer);
                 resetPage();
             }
+            rightOrWrong.style.display = "none"
             wrongAnswer.style.visibility = "hidden";
         }   
         else{
+            rightOrWrong.style.display = "none"
+            wrongAnswer.style.visibility = "hidden";
             clearInterval(timer);
             return
         }
@@ -136,23 +146,23 @@ function changeText(){
     for (var i = 0; i < 4; i++){
         if (counterVar == 1){
             newButtonTable[i].innerText = firstAnswers[i]
-            h2.innerText = "Question 1"
+            h2.innerText = "What is a correct syntax to output " + '\u0022' + "HelloWorld" + '\u0022' + " in Java?"
         }
         else if (counterVar == 2){
             newButtonTable[i].innerText = secondAnswers[i]
-            h2.innerText = "Question 2"
+            h2.innerText = "Which data type is used to create a variable that should store text?"
         }
         else if (counterVar == 3){
             newButtonTable[i].innerText = thirdAnswers[i]
-            h2.innerText = "Question 3"
+            h2.innerText = "How do you comment one line of code in JS?"
         }
         else if (counterVar == 4){
             newButtonTable[i].innerText = forthAnswers[i]
-            h2.innerText = "Question 4"
+            h2.innerText = "How do you define a float of 2.6 in JS"
         }
         else if (counterVar == 5){
             newButtonTable[i].innerText = fifthAnswers[i]
-            h2.innerText = "Question 5"
+            h2.innerText = "How do you call a function?"
         }
         else{
             if (i==3){
@@ -169,57 +179,68 @@ function changeText(){
 
 function answerSelected(event){
     var pressedButton = newButtonTable.indexOf(event.path[0]) // this is index of newButtonTable
+    var rightOrWrong = document.getElementById("rightOrWrong")
     if (counterVar == 1){
         if (firstKey[pressedButton]){
-            console.log("you're right!")
+            rightOrWrong.innerText = "Correct!"
+            rightOrWrong.style.display = "block"
             rightAnswers++
         }
         else{
-            console.log("you're Wrong")
+            rightOrWrong.innerText = "incorrect!"
+            rightOrWrong.style.display = "block"
             wrongAnswer.style.visibility = "visible";
             sec -= 5
         }
     }
     else if (counterVar == 2){
         if (secondKey[pressedButton]){
-            console.log("you're right!")
+            rightOrWrong.innerText = "Correct!"
+            rightOrWrong.style.display = "block"
             rightAnswers++
         }
         else{
-            console.log("you're Wrong")
+            rightOrWrong.innerText = "incorrect!"
+            rightOrWrong.style.display = "block"
             wrongAnswer.style.visibility = "visible";
             sec -= 5
         }
     }
     else if (counterVar == 3){
         if (thirdKey[pressedButton]){
-            console.log("you're right!")
+            rightOrWrong.innerText = "Correct!"
+            rightOrWrong.style.display = "block"
             rightAnswers++
         }
         else{
-            console.log("you're Wrong")
+            rightOrWrong.innerText = "incorrect!"
+            rightOrWrong.style.display = "block"
             wrongAnswer.style.visibility = "visible";
             sec -= 5
         }
     }
     else if (counterVar == 4){
         if (forthKey[pressedButton]){
-            console.log("you're right!")
+            rightOrWrong.innerText = "Correct!"
+            rightOrWrong.style.display = "block"
             rightAnswers++
         }
         else{
-            console.log("you're Wrong")
+            rightOrWrong.innerText = "incorrect!"
+            rightOrWrong.style.display = "block"
             wrongAnswer.style.visibility = "visible";
             sec -= 5
         }
     }
     else if (counterVar == 5){
         if (fifthKey[pressedButton]){
-            console.log("you're right!")
+            rightOrWrong.innerText = "Correct!"
+            rightOrWrong.style.display = "block"
             rightAnswers++
         }
         else{
-            console.log("you're Wrong")
+            rightOrWrong.innerText = "incorrect!"
+            rightOrWrong.style.display = "block"
             wrongAnswer.style.visibility = "visible";
             sec -= 5
         }
@@ -242,6 +263,11 @@ function MakeButtons(){
         newButton.addEventListener('click', answerSelected)
         newButtonTable[i] = newButton //Use this to reference each button
     }  
+    var newTextBox = document.createElement('h3')
+    newTextBox.id = "rightOrWrong"
+    newTextBox.style.margin = "4%"
+    newTextBox.style.display = "none"
+    answers.appendChild(newTextBox)
 }
 
 function startGame(){
