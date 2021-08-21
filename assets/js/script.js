@@ -30,8 +30,6 @@ var thirdKey = [false, false, false, true]
 var forthKey = [false, true, false, false]
 var fifthKey = [false, false, true, false]
 
-//resetVars
-
 //saving initials Vars
 var localData = window.localStorage
 var scores = []
@@ -42,9 +40,7 @@ wrongAnswer.style.visibility = "hidden";
 
 function resetPage(){
     
-    
     var playAgain = document.getElementById("playAgain")
-    
     
     playAgain.parentNode.removeChild(playAgain)
     StartButton.style.visibility = "visible";
@@ -61,7 +57,7 @@ function resetPage(){
 
 function sortLeader(){
     document.getElementById("StartButton").style.visibility = "hidden"
-    h2.innerText = "Leader Board!"
+    h2.innerText = "Leaderboard!"
     scores.sort((a, b) => b.score - a.score)
     scores.forEach((e) => {
        var newScore = document.createElement('li')
@@ -245,7 +241,6 @@ function answerSelected(event){
             sec -= 5
         }
     }
-
     counterVar++
     changeText()
 }
@@ -277,25 +272,16 @@ function startGame(){
     MakeButtons();
     counterVar++
     changeText()
-    
-    //Set up first question and Button answers
-    //firstQuestions();
-
-    //Add timer logic here
-
-
 }
 
 function checkStorage(){
-    for (var i = 0; i < localData.length; i++){
-        
+    for (var i = 0; i < localData.length; i++){   
         if (localData.getItem("leader" + i)  != null){
             var oldObjects = {}
             var oldInitials = localData.getItem("leader" + i).replace(/[0-9]/g, '');
             var oldScore = parseInt(localData.getItem("leader" + i).match(/\d+/g));
             oldObjects.player = oldInitials
             oldObjects.score = oldScore
-
             scores.push(oldObjects)
         }
     }
