@@ -40,6 +40,7 @@ wrongAnswer.style.visibility = "hidden";
 
 function resetPage(){
     
+    //resets all starting vars
     var playAgain = document.getElementById("playAgain")
     
     playAgain.parentNode.removeChild(playAgain)
@@ -58,9 +59,9 @@ function resetPage(){
 function sortLeader(){
     document.getElementById("StartButton").style.visibility = "hidden"
     h2.innerText = "Leaderboard!"
-    scores.sort((a, b) => b.score - a.score)
+    scores.sort((a, b) => b.score - a.score) //sorts highest score to the top
     scores.forEach((e) => {
-       var newScore = document.createElement('li')
+       var newScore = document.createElement('li') //creates a new li element for all score objects in my array
        newScore.className = "list-group-item"
        
        newScore.innerText = `${e.player} ${e.score}`
@@ -68,7 +69,7 @@ function sortLeader(){
        newScore.style.backgroundColor = "purple"
        newScore.style.color = "white"
        newScore.style.width = "220px"
-       scoreEL.push(newScore)
+       scoreEL.push(newScore) //I push it to an array so I can referense and destroy them later
        leaderUl.appendChild(newScore)
 
        
@@ -105,7 +106,7 @@ function endGame(){
     wrongAnswer.style.visibility = "hidden";
     gameStarted = false;
     for (var i = 0; i < 4; i++){
-        newButtonTable[i].parentNode.removeChild(newButtonTable[i]);
+        newButtonTable[i].parentNode.removeChild(newButtonTable[i]); //Destroys my buttons
     }
     newButtonTable = []
     counterVar = 0
@@ -117,8 +118,9 @@ function endGame(){
 }
 
 function timer(){
-    var rightOrWrong = document.getElementById("rightOrWrong")
+    
     var timer = setInterval(function(){
+        var rightOrWrong = document.getElementById("rightOrWrong")
         if (gameStarted){
             timerText.innerHTML= sec + " sec";
             sec--;
@@ -140,34 +142,34 @@ function timer(){
 
 function changeText(){
     for (var i = 0; i < 4; i++){
-        if (counterVar == 1){
-            newButtonTable[i].innerText = firstAnswers[i]
-            h2.innerText = "What is a correct syntax to output " + '\u0022' + "HelloWorld" + '\u0022' + " in Java?"
-        }
-        else if (counterVar == 2){
-            newButtonTable[i].innerText = secondAnswers[i]
-            h2.innerText = "Which data type is used to create a variable that should store text?"
-        }
-        else if (counterVar == 3){
-            newButtonTable[i].innerText = thirdAnswers[i]
-            h2.innerText = "How do you comment one line of code in JS?"
-        }
-        else if (counterVar == 4){
-            newButtonTable[i].innerText = forthAnswers[i]
-            h2.innerText = "How do you define a float of 2.6 in JS"
-        }
-        else if (counterVar == 5){
-            newButtonTable[i].innerText = fifthAnswers[i]
-            h2.innerText = "How do you call a function?"
-        }
-        else{
-            if (i==3){
-                h2.innerText = "Quiz finished, you got " + rightAnswers + "/5 questions correct!"
-                endGame();
-            }
-            
-            
-            //Create resetbutton and save time button
+
+        switch(counterVar){
+            case 1: 
+                newButtonTable[i].innerText = firstAnswers[i]
+                h2.innerText = "What is a correct syntax to output " + '\u0022' + "HelloWorld" + '\u0022' + " in Java?"
+                break
+            case 2:
+                newButtonTable[i].innerText = secondAnswers[i]
+                h2.innerText = "Which data type is used to create a variable that should store text?"
+                break
+            case 3:
+                newButtonTable[i].innerText = thirdAnswers[i]
+                h2.innerText = "How do you comment one line of code in JS?"
+                break
+            case 4:
+                newButtonTable[i].innerText = forthAnswers[i]
+                h2.innerText = "How do you define a float of 2.6 in JS"
+                break
+            case 5:
+                newButtonTable[i].innerText = fifthAnswers[i]
+                h2.innerText = "How do you call a function?"
+                break
+            case 6: 
+                if (i==3){
+                    h2.innerText = "Quiz finished, you got " + rightAnswers + "/5 questions correct!"
+                    endGame();
+                }
+                break
         }
     }
 }
@@ -176,71 +178,76 @@ function changeText(){
 function answerSelected(event){
     var pressedButton = newButtonTable.indexOf(event.path[0]) // this is index of newButtonTable
     var rightOrWrong = document.getElementById("rightOrWrong")
-    if (counterVar == 1){
-        if (firstKey[pressedButton]){
-            rightOrWrong.innerText = "Correct!"
-            rightOrWrong.style.display = "block"
-            rightAnswers++
+
+    switch(counterVar){
+        case 1:
+            if (firstKey[pressedButton]){
+                rightOrWrong.innerText = "Correct!"
+                rightOrWrong.style.display = "block"
+                rightAnswers++
+            }
+            else{
+                rightOrWrong.innerText = "incorrect!"
+                rightOrWrong.style.display = "block"
+                wrongAnswer.style.visibility = "visible";
+                sec -= 5
+            }
+            break
+        case 2:
+            if (secondKey[pressedButton]){
+                rightOrWrong.innerText = "Correct!"
+                rightOrWrong.style.display = "block"
+                rightAnswers++
+            }
+            else{
+                rightOrWrong.innerText = "incorrect!"
+                rightOrWrong.style.display = "block"
+                wrongAnswer.style.visibility = "visible";
+                sec -= 5
+            }
+            break
+        case 3: 
+            if (thirdKey[pressedButton]){
+                rightOrWrong.innerText = "Correct!"
+                rightOrWrong.style.display = "block"
+                rightAnswers++
+            }
+            else{
+                rightOrWrong.innerText = "incorrect!"
+                rightOrWrong.style.display = "block"
+                wrongAnswer.style.visibility = "visible";
+                sec -= 5
+            }
+            break
+        case 4:
+            if (forthKey[pressedButton]){
+                rightOrWrong.innerText = "Correct!"
+                rightOrWrong.style.display = "block"
+                rightAnswers++
+            }
+            else{
+                rightOrWrong.innerText = "incorrect!"
+                rightOrWrong.style.display = "block"
+                wrongAnswer.style.visibility = "visible";
+                sec -= 5
+            }
+            break
+        case 5:
+            if (fifthKey[pressedButton]){
+                rightOrWrong.innerText = "Correct!"
+                rightOrWrong.style.display = "block"
+                rightAnswers++
+            }
+            else{
+                rightOrWrong.innerText = "incorrect!"
+                rightOrWrong.style.display = "block"
+                wrongAnswer.style.visibility = "visible";
+                sec -= 5
+            }
+            break
         }
-        else{
-            rightOrWrong.innerText = "incorrect!"
-            rightOrWrong.style.display = "block"
-            wrongAnswer.style.visibility = "visible";
-            sec -= 5
-        }
-    }
-    else if (counterVar == 2){
-        if (secondKey[pressedButton]){
-            rightOrWrong.innerText = "Correct!"
-            rightOrWrong.style.display = "block"
-            rightAnswers++
-        }
-        else{
-            rightOrWrong.innerText = "incorrect!"
-            rightOrWrong.style.display = "block"
-            wrongAnswer.style.visibility = "visible";
-            sec -= 5
-        }
-    }
-    else if (counterVar == 3){
-        if (thirdKey[pressedButton]){
-            rightOrWrong.innerText = "Correct!"
-            rightOrWrong.style.display = "block"
-            rightAnswers++
-        }
-        else{
-            rightOrWrong.innerText = "incorrect!"
-            rightOrWrong.style.display = "block"
-            wrongAnswer.style.visibility = "visible";
-            sec -= 5
-        }
-    }
-    else if (counterVar == 4){
-        if (forthKey[pressedButton]){
-            rightOrWrong.innerText = "Correct!"
-            rightOrWrong.style.display = "block"
-            rightAnswers++
-        }
-        else{
-            rightOrWrong.innerText = "incorrect!"
-            rightOrWrong.style.display = "block"
-            wrongAnswer.style.visibility = "visible";
-            sec -= 5
-        }
-    }
-    else if (counterVar == 5){
-        if (fifthKey[pressedButton]){
-            rightOrWrong.innerText = "Correct!"
-            rightOrWrong.style.display = "block"
-            rightAnswers++
-        }
-        else{
-            rightOrWrong.innerText = "incorrect!"
-            rightOrWrong.style.display = "block"
-            wrongAnswer.style.visibility = "visible";
-            sec -= 5
-        }
-    }
+
+        
     counterVar++
     changeText()
 }
@@ -266,21 +273,20 @@ function MakeButtons(){
 }
 
 function startGame(){
-    gameStarted = true
+    gameStarted = true //bool is for the timer 
     timer()
-    StartButton.style.visibility= "hidden"; 
+    StartButton.style.visibility= "hidden"; // hides the start button so it cannot be clicked again
     MakeButtons();
-    counterVar++
+    counterVar++ //tells which question to ask.
     changeText()
 }
 
 function checkStorage(){
     for (var i = 0; i < localData.length; i++){   
-        if (localData.getItem("leader" + i)  != null){
+        if (localData.getItem("leader" + i)  != null){ //checks if there is a leaderboard key in localstorage
             var oldObjects = {}
-            var oldInitials = localData.getItem("leader" + i).replace(/[0-9]/g, '');
-            var oldScore = parseInt(localData.getItem("leader" + i).match(/\d+/g));
-            oldObjects.player = oldInitials
+            var oldInitials = localData.getItem("leader" + i).replace(/[0-9]/g, ''); //removes numbers from the string
+            var oldScore = parseInt(localData.getItem("leader" + i).match(/\d+/g)); //removes chars from the string
             oldObjects.score = oldScore
             scores.push(oldObjects)
         }
