@@ -6,6 +6,11 @@ Week 4 HomeWork Assignment
 2. hit "Start Game"
 3. Once you finish, input your initals (if you put numbers in your initials, they will be removed)
 
+![image](Code-Quiz.png)
+
+## Design 
+
+
 ## Features
 - You will be alerted when you get a questions correct or incorrect
 - You will see your timer go down 5 seconds on each incorrect answer
