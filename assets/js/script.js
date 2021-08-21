@@ -13,6 +13,7 @@ var counterVar = 0
 var rightAnswers = 0
 var sec = 60;
 var gameStarted = false;
+var boardIsShown = false;
 
 timerText.textContent = sec + " sec"
 
@@ -39,7 +40,7 @@ inputDiv.style.display = "none"
 wrongAnswer.style.visibility = "hidden";
 
 function resetPage(){
-    
+    boardIsShown = false
     //resets all starting vars
     var playAgain = document.getElementById("playAgain")
     
@@ -78,12 +79,17 @@ function sortLeader(){
     for (var i = 0; i < scores.length; i++){
         localData.setItem("leader" +i, scores[i].player + "" + scores[i].score)
     }
-    var playAgain = document.createElement('button')
-    playAgain.id = "playAgain"
-    playAgain.className = "btn btn-primary btn-lg"
-    playAgain.innerText = "Go Back";
-    answers.appendChild(playAgain)
-    playAgain.addEventListener('click', resetPage)
+    if(boardIsShown == false){
+        boardIsShown = true
+        var playAgain = document.createElement('button')
+        playAgain.id = "playAgain"
+        playAgain.className = "btn btn-primary btn-lg"
+        playAgain.innerText = "Go Back";
+        answers.appendChild(playAgain)
+        playAgain.addEventListener('click', resetPage)
+    }
+    
+    
     //displayLeaderBoards()
 }
 
