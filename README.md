@@ -7,12 +7,12 @@ Week 4 HomeWork Assignment
 3. Once you finish, input your initals (if you put numbers in your initials, they will be removed)
 
 ## Features
-You will be alerted when you get a questions correct or incorrect
-You will see your timer go down 5 seconds on each incorrect answer
-If you click leaderboard in the header, the leaderboard will be displayed (Even if you refresh your browser)
+- You will be alerted when you get a questions correct or incorrect
+- You will see your timer go down 5 seconds on each incorrect answer
+- If you click leaderboard in the header, the leaderboard will be displayed (Even if you refresh your browser)
 
 ## Languages Used
-JavaScript (Logic)
-HTML (Bones of site)
-Bootstrap (Styling)
-Css (For minor Tweeks)
+- JavaScript (Logic)
+- HTML (Bones of site)
+- Bootstrap (Styling)
+- Css (For minor Tweeks)
